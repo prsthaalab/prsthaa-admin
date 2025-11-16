@@ -184,12 +184,13 @@ export default function Admin({ user, onLogout }){
   });
 
   // helper to get image URL for preview (public bucket)
-  function publicUrlFor(path) {
-    if (!path) return null;
-    // storage public object URL format:
-    // {SUPABASE_URL}/storage/v1/object/public/{path}
-    return `${process.env.REACT_APP_SUPABASE_URL.replace(/\\/$/,'')}/storage/v1/object/public/${path}`;
-  }
+ // replace the existing publicUrlFor function with this
+function publicUrlFor(path) {
+  if (!path) return null;
+  // remove trailing slash from SUPABASE_URL then construct public object URL
+  return `${process.env.REACT_APP_SUPABASE_URL.replace(/\/$/,'')}/storage/v1/object/public/${path}`;
+}
+
 
   // category options from products
   const categories = Array.from(new Set(products.map(p => p.category).filter(Boolean)));
